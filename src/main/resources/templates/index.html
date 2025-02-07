@@ -1,0 +1,100 @@
+<!-- src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Medicine & Appointment System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Additional custom styles can be added here */
+        .hero {
+            background-color: #f8f9fa;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+        }
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        .card-link:hover {
+            text-decoration: none;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Patient System</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}">Patient Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/appointments}">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/medications}">Medications</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero container">
+    <h1>Welcome to the Patient Medicine & Appointment System</h1>
+    <p class="lead">Manage patient registrations, book appointments, and track medications with ease.</p>
+</div>
+
+<!-- Cards Section -->
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Patient Registration</h5>
+                    <p class="card-text">Register a new patient and manage their details.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a class="card-link" th:href="@{/register}">Register Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Appointments</h5>
+                    <p class="card-text">View, book, and manage patient appointments.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a class="card-link" th:href="@{/appointments}">View Appointments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Medications</h5>
+                    <p class="card-text">Keep track of prescribed medications for patients.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a class="card-link" th:href="@{/medications}">View Medications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

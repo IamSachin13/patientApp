@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container">
+<h2>Appointments</h2>
+
+<!-- Success and error messages -->
+<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+<!-- Appointment Booking Form -->
+<h4>Book a New Appointment</h4>
+<form th:action="@{/appointments/book}" method="post">
+    <div class="mb-3">
+        <label for="patientId">Patient:</label>
+        <!-- Dropdown populated with existing patients -->
+        <select id="patientId" name="patientId" class="form-select" required>
+            <option value="" disabled selected>Select Patient</option>
+            <!-- Iterate over patients added to the model -->
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.name}">
+            </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="doctorName">Doctor Name:</label>
+        <input type="text" id="doctorName" name="doctorName" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="dateTime">Appointment Date and Time:</label>
+        <!-- Using datetime-local for calendar picker -->
+        <input type="datetime-local" id="dateTime" name="dateTime" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Book Appointment</button>
+</form>
+
+<hr/>
+
+<!-- List of Existing Appointments -->
+<h4>Existing Appointments</h4>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date and Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.id}"></td>
+        <td th:text="${appointment.patient != null ? appointment.patient.name : 'N/A'}">Patient Name</td>
+        <td th:text="${appointment.doctorName}"></td>
+        <td th:text="${appointment.appointmentDateTime}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/}">Back to Home</a>
+</body>
+</html>

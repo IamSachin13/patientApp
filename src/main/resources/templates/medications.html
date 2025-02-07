@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medications</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container">
+<h2>Medications</h2>
+
+<!-- Display success and error messages -->
+<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+<!-- Form to add a new medication -->
+<h4>Add Medication</h4>
+<form th:action="@{/medications/add}" method="post">
+    <div class="mb-3">
+        <label for="patientId">Patient:</label>
+        <!-- Dropdown populated with existing patients -->
+        <select id="patientId" name="patientId" class="form-select" required>
+            <option value="" disabled selected>Select Patient</option>
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.name}">
+            </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="name">Medication Name:</label>
+        <input type="text" id="name" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="dosage">Dosage:</label>
+        <input type="text" id="dosage" name="dosage" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="instructions">Instructions:</label>
+        <textarea id="instructions" name="instructions" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Medication</button>
+</form>
+
+<hr/>
+
+<!-- List of Existing Medications -->
+<h4>Existing Medications</h4>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Name</th>
+        <th>Dosage</th>
+        <th>Instructions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="medication : ${medications}">
+        <td th:text="${medication.id}"></td>
+        <td th:text="${medication.patient != null ? medication.patient.name : 'N/A'}">Patient Name</td>
+        <td th:text="${medication.name}"></td>
+        <td th:text="${medication.dosage}"></td>
+        <td th:text="${medication.instructions}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<a th:href="@{/}">Back to Home</a>
+</body>
+</html>
