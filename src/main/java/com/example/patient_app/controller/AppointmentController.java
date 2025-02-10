@@ -1,7 +1,5 @@
 package com.example.patient_app.controller;
 
-
-
 import com.example.patient_app.model.Appointment;
 import com.example.patient_app.model.Patient;
 import com.example.patient_app.repository.AppointmentRepository;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 
 @Controller
@@ -72,5 +71,43 @@ public class AppointmentController {
         model.addAttribute("appointments", appointmentRepository.findAll());
         model.addAttribute("patients", patientRepository.findAll());
         return "appointments";
+    }
+
+    // Delete an appointment
+    @GetMapping("/appointments/delete/{id}")
+    public String deleteAppointment(@PathVariable String id, Model model) {
+        appointmentRepository.deleteById(id);
+        // Using redirect ensures the appointment list is refreshed
+        return "redirect:/appointments";
+    }
+
+    // Show the edit form for an appointment
+    @GetMapping("/appointments/edit/{id}")
+    public String showEditAppointment(@PathVariable String id, Model model) {
+        Appointment appointment = appointmentRepository.findById(id).orElse(null);
+        if (appointment == null) {
+            model.addAttribute("error", "Appointment not found.");
+            return "redirect:/appointments";
+        }
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("patients", patientRepository.findAll());
+        return "edit-appointment";
+    }
+
+
+    // Process the update of an appointment
+    @PostMapping("/appointments/update")
+    public String updateAppointment(@ModelAttribute Appointment appointment, Model model) {
+        // Log or debug appointment.getId() to ensure it's not null
+        Appointment existingAppointment = appointmentRepository.findById(appointment.getId()).orElse(null);
+        if (existingAppointment == null) {
+            model.addAttribute("error", "Appointment not found.");
+            return "redirect:/appointments";
+        }
+        existingAppointment.setDoctorName(appointment.getDoctorName());
+        existingAppointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
+        existingAppointment.setPatient(appointment.getPatient());
+        appointmentRepository.save(existingAppointment);
+        return "redirect:/appointments";
     }
 }

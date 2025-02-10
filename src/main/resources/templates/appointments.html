@@ -50,6 +50,7 @@
         <th>Patient</th>
         <th>Doctor</th>
         <th>Date and Time</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -58,6 +59,16 @@
         <td th:text="${appointment.patient != null ? appointment.patient.name : 'N/A'}">Patient Name</td>
         <td th:text="${appointment.doctorName}"></td>
         <td th:text="${appointment.appointmentDateTime}"></td>
+        <td>
+            <!-- Update button linking to the edit page -->
+            <a th:href="@{'/appointments/edit/' + ${appointment.id}}" class="btn btn-sm btn-warning">Update</a>
+            <!-- Delete button with a confirmation dialog -->
+            <a th:href="@{'/appointments/delete/' + ${appointment.id}}"
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('Are you sure you want to delete this appointment?');">
+                Delete
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
